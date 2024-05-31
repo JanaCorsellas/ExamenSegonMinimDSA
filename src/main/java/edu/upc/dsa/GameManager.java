@@ -28,5 +28,7 @@ public interface GameManager {
     public List<Item> findAll();
     public int size();
 
+    public void formulari(String data, String title, String message, String sender) throws MissingDataException;
+
 }
 

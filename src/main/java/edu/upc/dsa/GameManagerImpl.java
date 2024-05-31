@@ -4,6 +4,7 @@ import edu.upc.dsa.db.DBUtils;
 import edu.upc.dsa.db.orm.Sessio;
 import edu.upc.dsa.db.orm.SessioImpl;
 import edu.upc.dsa.exception.*;
+import edu.upc.dsa.models.Formulari;
 import edu.upc.dsa.models.Item;
 import edu.upc.dsa.models.Usuari;
 
@@ -13,17 +14,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+import jersey.repackaged.com.google.common.base.MoreObjects;
 import org.apache.log4j.Logger;
 
 public class GameManagerImpl implements GameManager {
     private static GameManager instance;
     protected List<Usuari> usuaris;
     protected List<Item> items;
+    protected List<Formulari> formularis;
     final static Logger logger = Logger.getLogger(GameManagerImpl.class);
 
     private GameManagerImpl() {
         this.usuaris = new LinkedList<>();
         this.items = new LinkedList<>();
+        this.formularis = new LinkedList<>();
     }
 
     public static GameManager getInstance() {
@@ -36,6 +40,17 @@ public class GameManagerImpl implements GameManager {
         logger.info("size " + ret);
 
         return ret;
+    }
+
+    @Override
+    public void formulari(String data, String title, String message, String sender) throws MissingDataException {
+        if (data == "" || title == "" || message == "" || sender == ""){
+            throw new MissingDataException("Falten camps per completar");
+        }
+        else{
+            Formulari formulari = new Formulari (data, title, message, sender);
+            this.formularis.add(formulari);
+        }
     }
 
     @Override
