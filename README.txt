@@ -1,1 +1,0 @@
-fitxers del projecte pel mínim 2
